@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title> ☆☆☆骰子占星☆☆☆</title>
+    <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <style type="text/css">
+        @-moz-keyframes tada {
+            0% {
+                -moz-transform: scale(1);
+            }
+
+            10%,
+            20% {
+                -moz-transform: scale(0.9) rotate(-3deg);
+            }
+
+            30%,
+            50%,
+            70%,
+            90% {
+                -moz-transform: scale(1.2) rotate(3deg);
+            }
+
+            40%,
+            60%,
+            80% {
+                -moz-transform: scale(1.2) rotate(-3deg);
+            }
+
+            100% {
+                -moz-transform: scale(1) rotate(0);
+            }
+        }
+
+        @-webkit-keyframes tada {
+            0% {
+                -webkit-transform: scale(1);
+            }
+
+            10%,
+            20% {
+                -webkit-transform: scale(0.9) rotate(-3deg);
+            }
+
+            30%,
+            50%,
+            70%,
+            90% {
+                -webkit-transform: scale(1.2) rotate(3deg);
+            }
+
+            40%,
+            60%,
+            80% {
+                -webkit-transform: scale(1.2) rotate(-3deg);
+            }
+
+            100% {
+                -webkit-transform: scale(1) rotate(0);
+            }
+        }
+
+        .bk {
+            background-image: url(./img/b.jpg);          
+            margin: 0;
+            padding: 0;
+            background-repeat:no-repeat;
+            min-height: 100vh;
+            background-size: 100% 100%;
+        
+        }
+
+        #startid {
+            /* display: none; */
+            width: 30%;
+            /* height: 20%; */
+            /* background-image: url('./th.jpg'); */
+            /* background-size: 100% 100%; */
+            position: fixed;
+            top: 43%;
+            left: 35%;
+            /*border-radius: 40px;*/
+            -webkit-animation: tada 1s .2s ease both;
+            -moz-animation: tada 1s .2s ease both;
+        }
+
+        #ball {
+            display: none;
+            width: 20%;
+            /* height: 10%; */
+            /* background-image: url('./1.png');
+            background-size: 100% 100%; */
+            position: absolute;
+            animation: anim 2s;
+            -webkit-animation: anim 1s;
+            -webkit-animation-fill-mode: forwards;
+            -moz-animation-fill-mode: forwards;
+            -ms-animation-fill-mode: forwards;
+            -o-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+        }
+
+        #ball2 {
+            display: none;
+            width: 20%;
+            /* height: 10%; */
+            /* background-image: url('./2.png');
+            background-size: 100% 100%; */
+            position: absolute;
+            animation: anim2 2s;
+            -webkit-animation: anim2 1s;
+            -webkit-animation-fill-mode: forwards;
+            -moz-animation-fill-mode: forwards;
+            -ms-animation-fill-mode: forwards;
+            -o-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+        }
+
+        #ball3 {
+            display: none;
+            width: 20%;
+            /* height: 10%; */
+            /* background-image: url('./3.png');
+            background-size: 100% 100%; */
+            position: absolute;
+            animation: anim3 2s;
+            -webkit-animation: anim3 1s;
+            -webkit-animation-fill-mode: forwards;
+            -moz-animation-fill-mode: forwards;
+            -ms-animation-fill-mode: forwards;
+            -o-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+        }
+
+        .refbutton {
+            font-size: 1em;
+            float: left;
+            width: 11%;
+            /* height: 100px; */
+            margin: 10px 0 0 10px;
+            opacity: 0.4;
+        }
+
+        .shuomingexitclass {
+            font-size: 1em;
+            float: left;
+            width: 11%;
+            margin: 10px 0 0 10px;
+            opacity: 0.8;
+        }
+
+        .smclass {
+            font-size: 1em;
+            float: right;
+            width: 11%;
+            margin: 10px 10px 0 0;
+            opacity: 0.4;
+        }
+
+        .bottomdiv {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            font-size: 1em;
+            text-align: center;
+            background-color: white;
+            opacity: 0.6;
+
+        }
+
+        .bodiv {
+            float: left;
+            width: 46%;
+            display: inline-block;
+        }
+
+        .bootomspn {
+            font-size: 1.2em;
+            display: block;
+            margin-top: 5%;
+        }
+
+        .bootomspnhan {
+            font-size: 0.5em;
+        }
+
+        .bottomtop {
+            font-size: 1.3em;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        /* pop-------------------------------------------- */
+        #goodcover {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            /* background-color: black; */
+            z-index: 1001;
+            -moz-opacity: 0.8;
+            opacity: 0.50;
+            filter: alpha(opacity=80);
+            overflow: scroll;
+        }
+
+        /* 
+        #shuoming {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1001;
+            -moz-opacity: 0.8;
+            opacity: 0.6;
+            filter: alpha(opacity=80);
+        } */
+        #shuoming {
+            display: none;
+            /* display: block;             */
+            position: fixed;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1001;
+            -moz-opacity: 0.8;
+            opacity: 0.6;
+            filter: alpha(opacity=80);
+            overflow: scroll;
+        }
+
+        #code {
+            width: 70%;
+            height: 57%;
+            background-color: white;
+            border: 1px solid ghostwhite;
+            padding: 10px;
+            position: absolute;
+            display: none;
+            left: 45%;
+            z-index: 1002;
+            opacity: 0.5;
+            overflow: auto;
+
+        }
+
+        .close1 {
+            /* width: 300px; */
+            height: 10px;
+        }
+
+        #closebt {
+            float: right;
+        }
+
+        #closebt img {
+            width: 20px;
+        }
+
+        .goodtxt {
+            text-align: left;
+        }
+
+        .goodtxt p {
+            /* height: 30px; */
+            /* line-height: 30px; */
+            font-size: 0.8em;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .code-img {
+            width: 250px;
+            margin: 30px auto 0 auto;
+            padding: 10px;
+        }
+
+        .code-img img {
+            width: 240px;
+        }
+
+        .popcontent {
+            font-family: "宋体", "SimSun";
+        }
+
+        .poptitleclass {
+            font-family: Helvetica, Arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑", STHeiti, "华文细黑", sans-serif;
+        }
+
+        /* pop -----------------------------------------end */
+    </style>
+    <script type="text/javascript">
+        var oS = null;
+        window.onload = function () {
+
+            $('#closebt').click(function () {
+                $('#code').hide();
+                $('#goodcover').hide();
+            });
+            $('#goodcover').click(function () {
+                $('#code').hide();
+                $('#goodcover').hide();
+            });
+
+            jQuery.fn.center = function (loaded) {
+                var obj = this;
+                body_width = parseInt($(window).width());
+                body_height = parseInt($(window).height());
+                block_width = parseInt(obj.width());
+                block_height = parseInt(obj.height());
+
+                left_position = parseInt((body_width / 2) - (block_width / 2) + $(window).scrollLeft());
+                if (body_width < block_width) {
+                    left_position = 0 + $(window).scrollLeft();
+                };
+
+                top_position = parseInt((body_height / 2) - (block_height / 2) + $(window).scrollTop());
+                if (body_height < block_height) {
+                    top_position = 0 + $(window).scrollTop();
+                };
+
+                if (!loaded) {
+
+                    obj.css({
+                        'position': 'absolute'
+                    });
+                    obj.css({
+                        'top': ($(window).height() - $('#code').height()) * 0.2,
+                        'left': left_position
+                    });
+                    $(window).bind('resize', function () {
+                        obj.center(!loaded);
+                    });
+                    $(window).bind('scroll', function () {
+                        obj.center(!loaded);
+                    });
+
+                } else {
+                    obj.stop();
+                    obj.css({
+                        'position': 'absolute'
+                    });
+                    obj.animate({
+                        'top': top_position
+                    }, 200, 'linear');
+                }
+            }
+
+            // 清除动画 显示start
+            exitid.onclick = function () {
+                if (oS) {
+                    var oH = document.getElementsByTagName('head')[0];
+                    oH.removeChild(oS);
+                    $("#ball").css({ display: "none" });
+                    $("#ball2").css({ display: "none" });
+                    $("#ball3").css({ display: "none" });
+                    $("#startid").css({ display: "block" });
+                    $("#botid").css({ display: "none" });
+                    oS = null;
+                    return
+                }
+            };
+            // 说明
+            smid.onclick = function () {
+                // let width = parseInt($('#mengDiv').width());
+                // let hight = parseInt($('#mengDiv').height()); 
+                $('#shuoming').css("width", "width");
+                $('#shuoming').css("hight", "hight");
+                $('#smid').hide();
+                $('#exitid').hide();
+                $('#shuoming').show();
+            };
+            // 说明退出
+            shuomingexit.onclick = function () {
+                $('#smid').show();
+                $('#exitid').show();
+                $('#shuoming').hide();
+            };
+            // 右  下  左  区域选择
+            let chose_arr = [
+                [{ 'left': 65, 'top': 23, 'src': './img/xingzuo1.png', title: '白羊', desc: '人事物：冒险、爆发的、火灾、瓦砾、军火、运动员、屠夫、技术员、奴婢 </br>正：勇气、斗志、主动、激情、活力、积极 </br>负：暴躁、冲动、霸道、好斗' },
+                { 'left': 65, 'top': 33, 'src': './img/xingzuo2.png', title: '金牛', desc: '人事物：艺术、金钱、珠宝、歌声、音乐、物质的、肺、会计师、经济学家、姬妾 </br>正：沉着、耐心、贵气、富商业头脑、友善 </br>负：贪婪、固执、惰性、欲望、色欲、物欲、放纵、守旧' },
+                { 'left': 70, 'top': 40, 'src': './img/xingzuo3.png', title: '双子', desc: '人事物：商业、思考、变化、资讯、通讯设备、气管、道路、刀剑、双重的、神父、演说家、推销员 </br>正：应变力、聪明、灵活、好奇、活跃、健谈 </br>负：三心二意、不安、唠叨、多疑、神经质' },
+                { 'left': 65, 'top': 33, 'src': './img/xingzuo4.png', title: '巨蟹', desc: '人事物：土地、不动产、田园、保护性的东西、外壳、家庭及日常用品、厨师、家庭主妇 </br>正：母性、顾家、念旧、温顺、直觉、保护、滋养、防御 </br>负：情绪化、 心胸狭窄、杞人忧天、过敏' },
+                { 'left': 70, 'top': 40, 'src': './img/xingzuo5.png', title: '狮子', desc: '人事物：表演、娱乐场所、发光体、心脏、血液、老大、主席、艺人、演员、王者、领袖、 </br>正：意志、追求、雄心、真诚、大度、热情、光明、华丽 </br>负：专横、虚荣心、傲慢、武断、自大 ' },
+                { 'left': 65, 'top': 33, 'src': './img/xingzuo6.png', title: '处女', desc: '人事物：资料、卫生用品、文档、有系统的、弯曲的物体、螺纹的、秘书、分析师、医生、护士 </br>正：谨慎、秩序、仔细、冷静、理智、整洁、勤劳</br>负：琐碎、纠结、忧郁、吹毛求疵、转牛角尖 ' },
+                { 'left': 70, 'top': 40, 'src': './img/xingzuo7.png', title: '天秤', desc: '人事物：艺术、社交性、美学、平衡的、摇摆的、律法、工具、纪律部队、仲裁者、外交官、政客、律师 </br>正：公正、浪漫、文雅、和平、善交际、好客、专业 </br>负：优柔寡断、懒散、不稳定、善权谋 ' },
+                { 'left': 65, 'top': 33, 'src': './img/xingzuo8.png', title: '天蝎', desc: '人事物：玄秘学、性爱、间谍、野草、昆虫、带毒之物、心里学家、药剂师、外科医生 </br>正：顽强、意志、好斗、洞察力、重生、神秘、欲望</br>负：毁灭、冷酷、报复、多疑、城府深.、善妒、狠毒 ' },
+                { 'left': 70, 'top': 40, 'src': './img/xingzuo9.png', title: '射手', desc: '人事物：哲学、国外事物、进出口、冒险、教育、旅行、教授、道士、作家、导游 </br>正：坦率、热情、乐观、开朗、开明、</br>负：高傲、自负、善变、漂泊、浮夸 ' },
+                { 'left': 65, 'top': 33, 'src': './img/xingzuo10.png', title: '魔羯', desc: '人事物：信用、地位、传统、骨头、金库、货仓、矿工、工程师、企业家 </br>正：专心、严谨、责任、耐性、节俭、谨慎、刻苦耐劳、守纪律 </br>负：内向、忧郁、功利、冷漠、墨守成规、阴沉' },
+                { 'left': 70, 'top': 40, 'src': './img/xingzuo11.png', title: '水瓶', desc: '人事物：创意、发明、科技、起始、改革、革命、新颖的、容器、花瓶、科学家、发明家、天文学家 </br>正：独立、聪明、创新、前卫、突破 </br>负：叛逆、怪诞、偏激 ' },
+                { 'left': 70, 'top': 40, 'src': './img/xingzuo12.png', title: '双鱼', desc: '人事物：神秘的、梦境、文学、巫术、化学品、液体、麻药、水产、海员、慈善家、宗教人事、诗人 </br>正：愿意牺牲、同情、浪漫、感性、善解人意 </br>负：放纵、退隐、不切实际、懒散、成瘾、堕落、欺诈、敏感 ' },
+                { 'left': 70, 'top': 40, 'src': './img/xingzuo5.png', title: '狮子', desc: '人事物：表演、娱乐场所、发光体、心脏、血液、老大、主席、艺人、演员、王者、领袖、 </br>正：意志、追求、雄心、真诚、大度、热情、光明、华丽 </br>负：专横、虚荣心、傲慢、武断、自大 ' },
+                { 'left': 65, 'top': 33, 'src': './img/xingzuo6.png', title: '处女', desc: '人事物：资料、卫生用品、文档、有系统的、弯曲的物体、螺纹的、秘书、分析师、医生、护士 </br>正：谨慎、秩序、仔细、冷静、理智、整洁、勤劳</br>负：琐碎、纠结、忧郁、吹毛求疵、转牛角尖 ' }
+                ],//xingzuo
+
+                [{ 'left': 45, 'top': 55, 'src': './img/xingxing1.png', title: '太阳', desc: '人事物：权力、人生目标、创造力、才华、政府机构、政治、焦点、舞台、父亲、领袖 </br>正：生命力、高贵、专贵、知名、华丽、大方、雄心、自信 </br>负：傲慢、浮夸、浪费、挥霍' },
+                { 'left': 50, 'top': 57, 'src': './img/xingxing2.png', title: '月亮', desc: '人事物：情感、直觉、记忆、五官感觉、生育、家庭事物、日常生活、过去、女性、母亲</br>正：安全感、保护、照顾、温柔 </br>负：无常、变动、情绪化、伤心 ' },
+                { 'left': 55, 'top': 60, 'src': './img/xingxing3.png', title: '水星', desc: '人事物：思考、知识、学习、演讲、语言、网络、信息、文件、商业活动、交通、钥匙 </br>正：灵活、理解力、理智、聪明、机智 </br>负：善变、谎言、不可靠、放荡、小人' },
+                { 'left': 45, 'top': 55, 'src': './img/xingxing4.png', title: '金星', desc: '人事物：爱情、金钱、财富、社交、艺术、音乐、珠宝、奢侈品、礼物、女性 </br>正：享受、气质、高贵、上流、典雅 </br>负：色欲、财欲、势利、奢侈、绯闻 ' },
+                { 'left': 50, 'top': 57, 'src': './img/xingxing5.png', title: '火星', desc: '人事物：军事、武力、高潮、竞争、发热源、性欲、男性 </br>正：积极、行动力、斗志、爆发力</br>负：野心、破坏、冲突、危险、犯罪、意外、灾伤、侵略 ' },
+                { 'left': 55, 'top': 60, 'src': './img/xingxing6.png', title: '木星', desc: '人事物：道德、信仰、宗教、智慧、法律、远方、扩张的、财富、旅行、异国、教育、长者 </br>正：幸运、成就、利益、乐观、升迁、仁慈、慷慨 </br>负：投机、夸张、浪费、自大 ' },
+                { 'left': 45, 'top': 55, 'src': './img/xingxing7.png', title: '土星', desc: '人事物：组织、架构、不动的、缓慢的、大型工程、工人、劳动者 </br>正：责任、耐性、认真、稳定、磨炼</br>负：拖延、保守、忧郁、困难、阻碍、限制、严肃、破旧、老气、固执' },
+                { 'left': 50, 'top': 57, 'src': './img/xingxing8.png', title: '天王星', desc: '人事物：大变动、高科技、分离的、独立的、突发、革命、新思潮 </br>正：创新、与众不同、好奇、改革 </br>负：叛逆、任性、怪异、反传统 ' },
+                { 'left': 55, 'top': 60, 'src': './img/xingxing9.png', title: '海王星', desc: '人事物：神秘、梦境、艺术、酒精、药物、水、容器、溶剂、麻醉剂、神经系统、精神病 </br>正：理想、慈善、神通、第六感 </br>负：幻想、自欺、骗局、迷糊、不负责任、混乱、假象、意志弱' },
+                { 'left': 45, 'top': 55, 'src': './img/xingxing10.png', title: '冥王星', desc: '人事物：潜意识、秘密的、深沉的、远处的、被忽略的、脱离的、保险、权力、黑社会 </br>正：重生、意志、坚忍、顽强 </br>负：阴谋、疑心、毁灭、死亡、残忍、恐怖' },
+                { 'left': 50, 'top': 57, 'src': './img/xingxing11.png', title: '计都(北交点)', desc: '人事物：复杂的、精细的、负担、业障、努力方向、奴仆 </br>正：精打细算、精明</br>负：计较、吝啬、小气、低俗、卑微' },
+                { 'left': 55, 'top': 60, 'src': './img/xingxing12.png', title: '罗睺(南交点)', desc: '人事物：目标、目的、另人烦躁的、噪音、刺眼光源、血光、灾祸、血瘤、火伤、野蛮人  </br>正：霸气、威势、豪气、雄厚 </br>负：易怒、好杀、暴躁 ' },
+                { 'left': 50, 'top': 57, 'src': './img/xingxing13.png', title: '月孛(莉莉丝)', desc: '人事物：偷情、色情、脏水、暗箱操作、神秘的、隐藏的、不见光的、情妇 </br>正：巧智、计谋、谋略</br>负：阴险、奸狡' },
+                { 'left': 55, 'top': 60, 'src': './img/xingxing14.png', title: '紫炁', desc: '人事物：学识、学术、高技术、宗教、光芒、彩红、北极光、无形的、虚无的、领袖、帝王、得道高人</br>正：贵气、大智慧、逢凶化吉</br>负：高傲、孤独、曲高和寡' }
+                ],//xingxing
+
+                [{ 'left': 20, 'top': 25, 'src': './img/gong1.png', title: '1宫', desc: '人格、自我、自身角度、本质、本位' },
+                { 'left': 25, 'top': 30, 'src': './img/gong2.png', title: '2宫', desc: '财产、可控制的资产、获得财富的方式、赚钱的能力、物质欲望、理财能力、收人、价值' },
+                { 'left': 30, 'top': 35, 'src': './img/gong3.png', title: '3宫', desc: '兄弟姊妹、同学、同事、短途旅行、交通工具、辅助工具、语言及沟通能力' },
+                { 'left': 20, 'top': 25, 'src': './img/gong4.png', title: '4宫', desc: '家居、家庭、房地产、土地、根基、底部、背后的支撑' },
+                { 'left': 25, 'top': 30, 'src': './img/gong5.png', title: '5宫', desc: '创造力、娱乐、恋爱、子女、享乐、悠闲、赌博、投资、表演能力' },
+                { 'left': 30, 'top': 35, 'src': './img/gong6.png', title: '6宫', desc: '个人的责任、健康、社会服务、工作、劳动、付出、下属、宠物' },
+                { 'left': 20, 'top': 25, 'src': './img/gong7.png', title: '7宫', desc: '婚姻、合伙关系、对方、对手、相对的事物 ' },
+                { 'left': 25, 'top': 30, 'src': './img/gong8.png', title: '8宫', desc: '情欲、性、死亡、再生、合约、契约、遗产、偏财、股票、偏门' },
+                { 'left': 30, 'top': 35, 'src': './img/gong9.png', title: '9宫', desc: '高等教育、哲学、宗教、法律、旅行、世界观、心灵智慧、移民、外国事物 ' },
+                { 'left': 20, 'top': 25, 'src': './img/gong10.png', title: '10宫', desc: '名誉地位、事业成就、社会责任、公众形象、上司、政府、前面、上面' },
+                { 'left': 25, 'top': 30, 'src': './img/gong11.png', title: '11宫', desc: '社交、社会团体、友谊、人际关系、道德' },
+                { 'left': 30, 'top': 35, 'src': './img/gong12.png', title: '12宫', desc: '内心世界、宗教、神秘、潜意识、个人隐私、心灵' },
+                { 'left': 25, 'top': 30, 'src': './img/gong2.png', title: '2宫', desc: '财产、可控制的资产、获得财富的方式、赚钱的能力、物质欲望、理财能力、收人、价值' },
+                { 'left': 30, 'top': 35, 'src': './img/gong3.png', title: '3宫', desc: '兄弟姊妹、同学、同事、短途旅行、交通工具、辅助工具、语言及沟通能力' }
+                ]
+            ];
+
+
+            startid.onclick = function () {
+                $('embed').remove();
+                $('body').append('<embed src="./startvoice.mp3" autostart="true" hidden="true" loop="false">');
+                var ready = false;
+                let r_region1 = parseInt(3 * Math.random());
+                let r_region2 = r_region1 + 1;
+                if (r_region2 > 2) {
+                    r_region2 = r_region2 - 3;
+                }
+                let r_region3 = r_region2 + 1;
+                if (r_region3 > 2) {
+                    r_region3 = r_region3 - 3;
+                }
+
+                let r_small1 = parseInt(14 * Math.random());
+                let r_small2 = parseInt(14 * Math.random());
+                let r_small3 = parseInt(14 * Math.random());
+                // 获取ball  设置球的src
+                let ba1 = document.getElementById("ball");
+                let ba2 = document.getElementById("ball2");
+                let ba3 = document.getElementById("ball3");
+                ba1.src = chose_arr[r_region1][r_small1]['src'];
+                ba2.src = chose_arr[r_region2][r_small2]['src'];
+                ba3.src = chose_arr[r_region3][r_small3]['src'];
+                // 获取 foot文字
+                let xingqiu = document.getElementById("xingqiu");
+                let xingzuo = document.getElementById("xingzuo");
+                let gongshu = document.getElementById("gongshu");
+                // 获取弹框文字
+                let xingpoptitle = document.getElementById("xingpoptitle");
+                let xingpopcontent = document.getElementById("xingpopcontent");
+                let xingzuopoptitle = document.getElementById("xingzuopoptitle");
+                let xingzuopopcontent = document.getElementById("xingzuopopcontent");
+                let gongpoptitle = document.getElementById("gongpoptitle");
+                let gongpopcontent = document.getElementById("gongpopcontent");
+                if (r_region1 == 0) {
+                    xingqiu.innerText = chose_arr[r_region2][r_small2]['title'];
+                    xingzuo.innerText = chose_arr[r_region1][r_small1]['title'];
+                    gongshu.innerText = chose_arr[r_region3][r_small3]['title'];
+                    xingpoptitle.innerText = chose_arr[r_region2][r_small2]['title'] + ':';
+                    xingpopcontent.innerHTML = chose_arr[r_region2][r_small2]['desc'];
+                    xingzuopoptitle.innerText = chose_arr[r_region1][r_small1]['title'] + ':';
+                    xingzuopopcontent.innerHTML = chose_arr[r_region1][r_small1]['desc'];
+                    gongpoptitle.innerText = chose_arr[r_region3][r_small3]['title'] + ':';
+                    gongpopcontent.innerHTML = chose_arr[r_region3][r_small3]['desc'];
+                } else if (r_region1 == 1) {
+                    xingqiu.innerText = chose_arr[r_region1][r_small1]['title'];
+                    xingzuo.innerText = chose_arr[r_region3][r_small3]['title'];
+                    gongshu.innerText = chose_arr[r_region2][r_small2]['title'];
+                    xingpoptitle.innerText = chose_arr[r_region1][r_small1]['title'] + ':';
+                    xingpopcontent.innerHTML = chose_arr[r_region1][r_small1]['desc'];
+                    xingzuopoptitle.innerText = chose_arr[r_region3][r_small3]['title'] + ':';
+                    xingzuopopcontent.innerHTML = chose_arr[r_region3][r_small3]['desc'];
+                    gongpoptitle.innerText = chose_arr[r_region2][r_small2]['title'] + ':';
+                    gongpopcontent.innerHTML = chose_arr[r_region2][r_small2]['desc'];
+                } else {
+                    xingqiu.innerText = chose_arr[r_region3][r_small3]['title'];
+                    xingzuo.innerText = chose_arr[r_region2][r_small2]['title'];
+                    gongshu.innerText = chose_arr[r_region1][r_small1]['title'];
+                    xingpoptitle.innerText = chose_arr[r_region3][r_small3]['title'] + ':';
+                    xingpopcontent.innerHTML = chose_arr[r_region3][r_small3]['desc'];
+                    xingzuopoptitle.innerText = chose_arr[r_region2][r_small2]['title'] + ':';
+                    xingzuopopcontent.innerHTML = chose_arr[r_region2][r_small2]['desc'];
+                    gongpoptitle.innerText = chose_arr[r_region1][r_small1]['title'] + ':';
+                    gongpopcontent.innerHTML = chose_arr[r_region1][r_small1]['desc'];
+                }
+
+                // 初始化0 40
+                var zero_left = '48%';
+                var zero_top = '0px';
+                var sishi_left = '48%';
+                var sishi_top = '45%';
+                //随机三个球
+                var ball1_left = chose_arr[r_region1][r_small1]['left'];
+                var ball1_top = chose_arr[r_region1][r_small1]['top'];
+                var ball2_left = chose_arr[r_region2][r_small2]['left'];
+                var ball2_top = chose_arr[r_region2][r_small2]['top'];
+                var ball3_left = chose_arr[r_region3][r_small3]['left'];
+                var ball3_top = chose_arr[r_region3][r_small3]['top'];
+
+                $("#startid").css({ display: "none" });
+                var oH = document.getElementsByTagName('head')[0];
+                oS = document.createElement('style');
+                oH.appendChild(oS);
+                oS.innerHTML =
+                    '@keyframes anim {' +
+                    '0% {' +
+                    'left: ' + zero_left + ';' +
+                    'top: ' + zero_top + ';' +
+                    '}' +
+                    '40% {' +
+                    'left: ' + sishi_left + ';' +
+                    'top: ' + sishi_top + ';' +
+                    '}' +
+                    '100% {' +
+                    'left: ' + ball1_left + '%;' +
+                    'top: ' + ball1_top + '%;' +
+                    '}' +
+                    '}' +
+                    '@keyframes anim2 {' +
+                    '0% {' +
+                    'left: ' + zero_left + ';' +
+                    'top: ' + zero_top + ';' +
+                    '}' +
+                    '40% {' +
+                    'left: ' + sishi_left + ';' +
+                    'top: ' + sishi_top + ';' +
+                    '}' +
+                    '100% {' +
+                    'left: ' + ball2_left + '%;' +
+                    'top: ' + ball2_top + '%;' +
+                    '}' +
+                    '}' +
+                    '@keyframes anim3 {' +
+                    '0% {' +
+                    'left: ' + zero_left + ';' +
+                    'top: ' + zero_top + ';' +
+                    '}' +
+                    '40% {' +
+                    'left: ' + sishi_left + ';' +
+                    'top: ' + sishi_top + ';' +
+                    '}' +
+                    '100% {' +
+                    'left: ' + ball3_left + '%;' +
+                    'top: ' + ball3_top + '%;' +
+                    '}' +
+                    '}'
+                $("#ball").css({ display: "block" });
+                $("#ball2").css({ display: "block" });
+                $("#ball3").css({ display: "block" });
+                ball.addEventListener('animationend', function () {
+                    if (ready) return;
+                    ready = true;
+                    $("#botid").css({ display: "block" });
+                }, false);
+
+            };
+
+        };
+        // 
+        var clickBall = function (flag) {
+            $('#code').center();
+            $('#goodcover').show();
+            $('#code').fadeIn();
+        }
+
+        var linkClick = function () {
+            location.href = 'https://vzan.com/ae/index-1068250';
+        }
+
+
+
+
+    </script>
+</head>
+
+<body class="bk">
+    <img src="./img/1.png" style="position:absolute;width: 88%;top:27%;left: 6%;">
+    <img id="ball" src="./img/xingxing1.png" onclick="clickBall(1)">
+    <img id="ball2" src="./img/xingzuo2.png" onclick="clickBall(2)">
+    <img id="ball3" src="./img/gong3.png" onclick="clickBall(3)">
+    <!-- <div id="startid"></div> -->
+    <img src="./img/th.png" id='startid'>
+
+    <!-- pop -->
+    <div style="width:60%"></div>
+
+    <!-- foot -->
+    <div class="bottomdiv" id="botid">
+        <div class="bottomtop"><span id="xingqiu">冥王星</span>&nbsp;&nbsp;<span id="xingzuo">狮子</span>&nbsp;&nbsp;<span
+                id="gongshu">10宫</span></div>
+        <div>
+
+            <div class="bodiv" style="text-align:right">
+                <div style="display: inline-block;text-align: center; width: 44%;">
+                    <img src="./img/er.jpg" style="width:100%;margin-top: 5px;">
+                    <span class="bootomspnhan" style="display: block;">Moira 星象馆</span>
+                </div>
+            </div>
+            <div onclick="linkClick()" class="bodiv"><span class="bootomspn" style="">问星阁</span><span class="bootomspnhan"
+                    style="display:block;margin: 8px;">官方咨询系统</span><span class="bootomspnhan">(仅微信端点击打开)</span></div>
+
+        </div>
+    </div>
+    <div id="shuoming">
+        <img id='shuomingexit' class="shuomingexitclass" src="./img/back.svg">
+        <div id='mengDiv' style="color:navajowhite;padding:20px ">
+            <h3 style="    text-align: center;">骰子占星测算指南</h3>
+            心想一件具体问题，掷出骰子。将得到的天星、星座、宫位意象过滤和重新组合。就是你所问事情的环境状态。例如问：他对她的感觉是如何？掷出月亮、巨蟹、5宫。月亮是感情，巨蟹是爱护、家庭，5
+            宫是恋爱。组合起来的意象就是他对她有爱慕之意。
+            骰子占星是一种状态指向，对于一些“是”或“否”的问题，只会侧面反映事物的状态。例如问：这次面试能成功否？投出金星，金牛，8宫。如果你是面试金融业的工作，这份工作一定能胜任，因为金星，金牛，8宫，都指向了金融这一意象。但如果演艺界的面试，这组合意思就是要走后门，潜规则才能成功，因为金星、金牛，代表情欲，8宫代表，偏门、性爱。
+            同一组合的骰子的可以有千万种解释，没绝对的吉凶，一切都要视具体人、事、物、环境而定，所以想问的事情一定要具体，否则骰子的指向也变得虚无而没法解析。如果是要找占星师求解骰子，要将你想问的事情描述细致，最好也将现况、环境描述清楚，这样占星师才更好运用骰子意象，直指人、事、物的核心。
+            <h4>问题类目指引</h4>
+            骰子占星善于状态类的占卜，例如，我们在一起后会幸福吗？这场比赛敌我双方发挥如何？而对于时间性的问题则难以回答？如什么时候能结婚？他什么时候能到？这些求测者都要注意。遇到选择性的问题，问事者应把提问转化成状态类占卜，例如：问xxx好不好?
+            应转化为: xxx 结果/过程如何？问选A 或 B好？应转化为:选A后果如何？选B后果如何？
+            <h4>注意事项</h4>
+            骰子占星具有心灵感应，需要在自己心境平和的状态下投掷，否者得出的组合只会反映你混乱的思绪，遇到你比较着急、紧张或重大的事情，都不要自己投，自己测。因为遇大事心则乱，乱就会影响信息，掷出的骰子则不会准确，初学者谨记，宜测无关痛痒的小事作入门练习。反复求问、多疑、多虑、心不诚之人不测。
+            <h4>月孛紫炁</h4>
+            月孛、紫炁是基于七政四余理论添加的两颗星，是本程序独有，增加天星数目能丰富骰子意象。关于月孛、紫炁含义可以参考程序注解，更深层意义可查阅公众号文章。各类占星理论及技巧不定期更新。
+            <h3 style="text-align: right;padding: 0 10px 10px 0;">Moira 星象馆 – 星玄</h3>
+
+        </div>
+    </div>
+    <!-- pop -->
+    <div id="goodcover"></div>
+    <div id="code">
+        <div class="close1"><a href="javascript:void(0)" id="closebt"><img src="./img/close.gif"></a></div>
+        <div class="goodtxt">
+            <p id='xingpoptitle' class="poptitleclass" style="color:black;">金星：</p>
+            <p id='xingpopcontent' class="popcontent" style="color:black;">爱情，爱的渴望，高端大气上档次，奢侈品，和谐宽容，愉快，浪漫，人缘桃花，财富和金钱，享乐主义，偷懒</p>
+            <p id='xingzuopoptitle' class="poptitleclass" style="color:black;">白羊：</p>
+            <p id='xingzuopopcontent' class="popcontent" style="color:black;">新生的开始，直接快速，瞬间的爆发力，独断自我，自以为是，不喜被管束，急于求成缺少耐性，三分钟热度，对喜欢的东西能坚持且专注，侵略性，竞争性，激情活力，喜新鲜和挑战，不喜欢简单乏味，孩子气，喜欢啪</p>
+            <p id='gongpoptitle' class="poptitleclass" style="color:black;">1宫：</p>
+            <p id='gongpopcontent' class="popcontent" style="color:black;">个性，自我意识，身体状况，外貌，举止，生命力，给人的第一印象。</p>
+        </div>
+
+    </div>
+    <!-- pop -->
+
+    <img id='exitid' class="refbutton" src="./img/back.svg">
+    <img id='smid' class="smclass" src="./img/shuomingicon.svg">
+</body>
+
+</html>
